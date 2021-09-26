@@ -30,31 +30,45 @@ Link to your `Digital-electronics-2` GitHub repository:
 1. Listing of C code with syntax highlighting which repeats one "dot" and one "comma" on a LED:
 
 ```c
+#define LED_GREEN   PB5 // AVR pin where green LED is connected
+#define SHORT_DELAY 300 // Short delay in milliseconds
+#define LONG_DELAY  900 // Long delay in milliseconds
+#ifndef F_CPU           // Preprocessor directive allows for conditional
+                        // compilation. The #ifndef means "if not defined".
+# define F_CPU 16000000 // CPU frequency in Hz required for delay
+#endif                  // The #ifndef directive must be closed by #endif
+
+#include <util/delay.h> // Functions for busy-wait delay loops
+#include <avr/io.h>     // AVR device-specific IO definitions
+
+
 int main(void)
 {
-    // Set pin as output in Data Direction Register
+    DDRB = DDRB | (1<<LED_GREEN);		// Set pin as output in Data Direction Register
     // DDRB = DDRB or 0010 0000
-    DDRB = DDRB | (1<<LED_GREEN);
 
-    // Set pin LOW in Data Register (LED off)
+    PORTB = PORTB & ~(1<<LED_GREEN);	// Set pin LOW in Data Register (LED off)
     // PORTB = PORTB and 1101 1111
-    PORTB = PORTB & ~(1<<LED_GREEN);
 
-    // Infinite loop
-    while (1)
+    while (1)    // Infinite loop
     {
-        // Pause several milliseconds
-        _delay_ms(SHORT_DELAY);
 
-        // WRITE YOUR CODE HERE
+		_delay_ms(SHORT_DELAY);				// Pause for several milliseconds
+		PORTB = PORTB | (1<<LED_GREEN);		// Turn on
+		_delay_ms(SHORT_DELAY);				// Pause for several milliseconds
+		PORTB = PORTB & ~(1<<LED_GREEN);	// Turn off to make a dot
+		_delay_ms(SHORT_DELAY);				// Pause for several milliseconds
+		PORTB = PORTB | (1<<LED_GREEN);		// Turn on
+		_delay_ms(LONG_DELAY);				// Pause for a bit more than several milliseconds
+		PORTB = PORTB & ~(1<<LED_GREEN);	// Turn off to make a dash
+
     }
 
-    // Will never reach this
-    return 0;
+    return 0;    // Will never reach this
 }
 ```
 
 
 2. Scheme of Morse code application, i.e. connection of AVR device, LED, resistor, and supply voltage. The image can be drawn on a computer or by hand. Always name all components and their values!
 
-   ![your figure]()
+   ![Arduino LED Scheme](images/circuit.png)
