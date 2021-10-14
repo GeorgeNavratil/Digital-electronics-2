@@ -33,13 +33,13 @@ int main(void)
 {
     // Configuration of LED(s) at port B
     GPIO_config_output(&DDRB, LED_D1);
-    GPIO_write_low(&PORTB, LED_D1);
+    GPIO_write_high(&PORTB, LED_D1);
     GPIO_config_output(&DDRB, LED_D2);
-    GPIO_write_low(&PORTB, LED_D2);
+    GPIO_write_high(&PORTB, LED_D2);
     GPIO_config_output(&DDRB, LED_D3);
-    GPIO_write_low(&PORTB, LED_D3);
+    GPIO_write_high(&PORTB, LED_D3);
     GPIO_config_output(&DDRB, LED_D4);
-    GPIO_write_low(&PORTB, LED_D4);
+    GPIO_write_high(&PORTB, LED_D4);
     
     // Configuration of 16-bit Timer/Counter1 for LED blinking
     // Set the overflow prescaler to 262 ms and enable interrupt
@@ -67,11 +67,18 @@ int main(void)
  **********************************************************************/
 ISR(TIMER1_OVF_vect)
 {
-    static uint16_t i=5;
+    static uint8_t i=5;
+    static int8_t d=1;
     
-    if (i==1){
-        GPIO_toggle(&PORTB, i);
+    GPIO_write_low(&PORTB, i)
+    
+    if (i!=2 | i!=5){
+        GPIO_write_high(&PORTB, i-d);
+    }else if (i==2){
+        d=1;
+    }else if (i==5){
+        d=-1;
     }else{
-        i++;
+        i=i+d;
     }
 }
