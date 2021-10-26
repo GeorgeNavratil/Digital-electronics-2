@@ -28,12 +28,15 @@ int main(void)
     SEG_init();
 
     // Test of SSD: display number '3' at position 0
-    SEG_update_shift_regs(3, 0);
+    SEG_update_shift_regs(3, 0, 0);
 
     // Configure 16-bit Timer/Counter1 for Decimal counter
     // Set the overflow prescaler to 262 ms and enable interrupt
     TIM1_overflow_262ms();
     TIM1_overflow_interrupt_enable();
+    
+    TIM0_overflow_4ms();
+    TIM0_overflow_interrupt_enable();
     
     // Enables interrupts by setting the global interrupt mask
     sei();
@@ -49,6 +52,8 @@ int main(void)
     return 0;
 }
 
+volatile uint8_t dis[] = {0,0,0,0};
+
 /* Interrupt service routines ----------------------------------------*/
 /**********************************************************************
  * Function: Timer/Counter1 overflow interrupt
@@ -56,15 +61,46 @@ int main(void)
  **********************************************************************/
 ISR(TIMER1_OVF_vect)
 {
-    static uint8_t num = 0;  // This line will only run the first time
-    // WRITE YOUR CODE HERE
-    if (num<9)
+    dis[0]++;
+    
+    if (dis[0] == 10)
     {
-        num++;
+        dis[1]++;
+        dis[0] = 0;
+    }
+    else if (dis[1] == 6)
+    {
+        dis[2]++;
+        dis[1] = 0;
+    }
+    else if (dis[2] == 10)
+    {
+        dis[3]++;
+        dis[2] = 0;
+    }
+    else if (dis[3] == 6)
+    {
+        dis[] = 0;
+    }
+}
+
+ISR(TIMER0_OVF_vect)
+{
+    static uint8_t posit = 0;
+    
+    if (posit == 2)
+    {
+        SEG_update_shift_regs(dis[posit], posit, 1);
     }
     else
     {
-       num = 0; 
+        SEG_update_shift_regs(dis[posit], posit, 0);
     }
-    SEG_update_shift_regs(num, 0);
+    
+    posit++;
+    
+    if (posit == 3)
+    {
+        posit = 0;
+    }
 }
