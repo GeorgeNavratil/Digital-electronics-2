@@ -67,7 +67,7 @@ int main(void)
     lcd_command(1 << LCD_DDRAM);
     
     // Display first custom character
-    lcd_gotoxy(15, 0);
+    lcd_gotoxy(14, 0);
     lcd_putc(0);
     
     // Enables interrupts by setting the global interrupt mask
