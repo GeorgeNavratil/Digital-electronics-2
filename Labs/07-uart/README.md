@@ -1,8 +1,8 @@
-# Lab 7: YOUR_FIRSTNAME FAMILYNAME
+# Lab 7: Jiří Navrátil
 
-Link to this file in your GitHub repository:
+Link to your `Digital-electronics-2` GitHub repository:
 
-[https://github.com/your-github-account/repository-name/lab_name](https://github.com/...)
+   [https://github.com/GeorgeNavratil/Digital-electronics-2](https://github.com/GeorgeNavratil/Digital-electronics-2)
 
 
 ### Analog-to-Digital Conversion
