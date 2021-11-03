@@ -38,10 +38,12 @@ ISR(ADC_vect)
     
     // set current 'a' value in dec
     lcd_gotoxy(8, 0); lcd_puts(lcd_string);
+    uart_puts(lcd_string); uart_puts("\n\r");
     
     // set current 'b' value in hex
     itoa(value, lcd_string, 16);
     lcd_gotoxy(13,0); lcd_puts(lcd_string);
+    uart_puts(lcd_string); uart_puts("\n\r");
     
     // clear 'c' value
     lcd_gotoxy(8,1); lcd_puts("        ");
