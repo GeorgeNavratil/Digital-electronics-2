@@ -8,12 +8,12 @@ Link to your `Digital-electronics-2` GitHub repository:
 ### Arduino Uno pinout
 
 1. In the picture of the Arduino Uno board, mark the pins that can be used for the following functions:
-   * PWM generators from Timer0, Timer1, Timer2 - 
-   * analog channels for ADC - 
-   * UART pins - 19, 18
-   * I2C pins - 
-   * SPI pins - 
-   * external interrupt pins INT0, INT1 - 
+   * PWM generators from Timer0, Timer1, Timer2 - 3, 5, 6, 9, 10, 11
+   * analog channels for ADC - 14, 15, 16, 17, 18, 19
+   * UART pins - 0 (RX), 1 (TX)
+   * I2C pins - 18 (SDA), 19 (SCL)
+   * SPI pins - 10 (CS), 11 (MOSI), 12 (MISO), 13 (SCK)
+   * external interrupt pins INT0, INT1 - 2 (INT0), 3 (INT1)
 
    ![Arduino Uno pinout](images/arduino_uno_pinout.png)
 
